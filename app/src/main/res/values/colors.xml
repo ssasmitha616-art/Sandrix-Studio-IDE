@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="sandrix_obsidian">#FF0D1117</color>
+    <color name="sandrix_panel">#FF161B22</color>
+    <color name="sandrix_elevated">#FF1F2630</color>
+    <color name="sandrix_border">#FF30363D</color>
+    <color name="sandrix_text_primary">#FFE6EDF3</color>
+    <color name="sandrix_text_secondary">#FF8B949E</color>
+
+    <color name="sandrix_cyan">#FF38BDF8</color>
+    <color name="sandrix_cyan_dim">#FF0C4A6E</color>
+    <color name="sandrix_cyan_soft">#2838BDF8</color>
+    <color name="sandrix_amber">#FFF59E0B</color>
+    <color name="sandrix_amber_dim">#FF451A03</color>
+    <color name="sandrix_emerald">#FF34D399</color>
+    <color name="sandrix_emerald_dark">#FF022C22</color>
+    <color name="sandrix_coral">#FFF87171</color>
+    <color name="sandrix_coral_soft">#33F87171</color>
+    <color name="sandrix_violet">#FFA78BFA</color>
+    <color name="sandrix_preview_bg">#FF0A0E14</color>
+
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+</resources>

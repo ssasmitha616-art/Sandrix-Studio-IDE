@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="6dp"
+    android:background="@drawable/bg_card_panel"
+    android:foreground="?attr/selectableItemBackground"
+    android:gravity="center_vertical"
+    android:minHeight="48dp"
+    android:orientation="horizontal"
+    android:paddingStart="10dp"
+    android:paddingTop="6dp"
+    android:paddingEnd="8dp"
+    android:paddingBottom="6dp">
+
+    <TextView
+        android:id="@+id/tv_git_change_badge"
+        android:layout_width="26dp"
+        android:layout_height="26dp"
+        android:background="@drawable/bg_pill_surface"
+        android:fontFamily="@font/jetbrains_mono"
+        android:gravity="center"
+        android:text="M"
+        android:textColor="@color/sandrix_amber"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_git_change_path"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="middle"
+            android:fontFamily="@font/jetbrains_mono"
+            android:maxLines="1"
+            android:text="src/MainActivity.java"
+            android:textColor="@color/sandrix_text_primary"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/tv_git_change_stage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/jetbrains_mono"
+            android:text="UNSTAGED"
+            android:textColor="@color/sandrix_text_secondary"
+            android:textSize="9.5sp" />
+    </LinearLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_git_stage_toggle"
+        style="@style/Widget.Material3.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="36dp"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:minWidth="0dp"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:text="Stage"
+        android:textAllCaps="false"
+        android:textSize="11sp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_git_file_more"
+        style="@style/Widget.Material3.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="36dp"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:minWidth="0dp"
+        android:paddingStart="6dp"
+        android:paddingEnd="6dp"
+        android:text="•••"
+        android:textColor="@color/sandrix_text_secondary"
+        android:textSize="12sp" />
+</LinearLayout>

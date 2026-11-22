@@ -1,0 +1,222 @@
+import com.android.build.api.instrumentation.AsmClassVisitorFactory
+import com.android.build.api.instrumentation.ClassContext
+import com.android.build.api.instrumentation.ClassData
+import com.android.build.api.instrumentation.InstrumentationParameters
+import com.android.build.api.instrumentation.InstrumentationScope
+import org.objectweb.asm.ClassVisitor
+import org.objectweb.asm.MethodVisitor
+import org.objectweb.asm.Opcodes
+
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'com.example'
+    compileSdk 36
+
+    defaultConfig {
+        applicationId 'com.stechapps.sandrixide.v1'
+        minSdk 24
+        targetSdk 28
+        versionCode Integer.parseInt((project.findProperty('appVersionCode') ?: '1').toString())
+        versionName "${project.findProperty('appVersionName') ?: '1.0'}".toString()
+        multiDexEnabled true
+        ndk {
+            // The bundled aapt2 is an arm64 build; keep the APK to the ABI it supports.
+            abiFilters 'arm64-v8a'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    // Release signing: CI passes SANDRIX_* env vars; locally use release-signing.properties
+    // (see release-signing.properties.example). Without either, the release APK stays unsigned.
+    def signingProps = new Properties()
+    def signingPropsFile = rootProject.file('release-signing.properties')
+    if (signingPropsFile.isFile()) {
+        signingPropsFile.withInputStream { signingProps.load(it) }
+    }
+    def envKeystore = System.getenv('SANDRIX_KEYSTORE_PATH')
+
+    signingConfigs {
+        release {
+            if (envKeystore) {
+                storeFile rootProject.file(envKeystore)
+                storePassword System.getenv('SANDRIX_STORE_PASSWORD')
+                keyAlias System.getenv('SANDRIX_KEY_ALIAS') ?: 'sandrix'
+                keyPassword System.getenv('SANDRIX_KEY_PASSWORD')
+                storeType 'PKCS12'
+            } else if (signingProps.getProperty('storeFile')) {
+                storeFile rootProject.file(signingProps.getProperty('storeFile'))
+                storePassword signingProps.getProperty('storePassword')
+                keyAlias signingProps.getProperty('keyAlias')
+                keyPassword signingProps.getProperty('keyPassword')
+                storeType signingProps.getProperty('storeType', 'PKCS12')
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            // Pass -PnoMinify to build the release APK without R8 (use if R8 breaks the app).
+            minifyEnabled !project.hasProperty('noMinify')
+            shrinkResources !project.hasProperty('noMinify')
+            debuggable false
+            if (signingConfigs.release.storeFile != null) {
+                signingConfig signingConfigs.release
+            }
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    packaging {
+        jniLibs {
+            // Extract native libs to disk: libaapt2.so is executed from nativeLibraryDir.
+            useLegacyPackaging true
+        }
+        resources {
+            excludes += [
+                'META-INF/DEPENDENCIES',
+                'META-INF/LICENSE*',
+                'META-INF/NOTICE*',
+                'META-INF/AL2.0',
+                'META-INF/LGPL2.1'
+            ]
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'androidx.multidex:multidex:2.0.1'
+    implementation 'androidx.appcompat:appcompat:1.7.0'
+    implementation 'com.google.android.material:material:1.12.0'
+    implementation 'androidx.activity:activity:1.10.1'
+    implementation 'androidx.core:core:1.16.0'
+    implementation 'androidx.drawerlayout:drawerlayout:1.2.0'
+    implementation 'androidx.recyclerview:recyclerview:1.3.2'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel:2.8.7'
+    implementation 'androidx.lifecycle:lifecycle-livedata:2.8.7'
+
+    implementation 'org.eclipse.jdt:ecj:3.33.0'
+    implementation 'com.android.tools:r8:8.7.18'
+    implementation 'com.android.tools.build:apksig:8.7.3'
+    implementation 'org.eclipse.jgit:org.eclipse.jgit:6.10.0.202406032230-r'
+    implementation 'org.slf4j:slf4j-nop:2.0.16'
+    implementation 'xmlpull:xmlpull:1.1.3.1'
+
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'com.android.tools.build:bundletool:1.18.3'
+    testImplementation 'com.google.protobuf:protobuf-java:3.22.3'
+}
+
+androidComponents {
+    onVariants(selector().all()) { variant ->
+        variant.instrumentation.transformClassesWith(
+                JdkCompatAsmVisitorFactory.class,
+                InstrumentationScope.ALL
+        ) {}
+    }
+}
+
+abstract class JdkCompatAsmVisitorFactory
+        implements AsmClassVisitorFactory<InstrumentationParameters.None> {
+
+    @Override
+    ClassVisitor createClassVisitor(ClassContext classContext, ClassVisitor nextClassVisitor) {
+        return new ClassVisitor(Opcodes.ASM9, nextClassVisitor) {
+            @Override
+            MethodVisitor visitMethod(int access, String name, String descriptor, String signature, String[] exceptions) {
+                MethodVisitor mv = super.visitMethod(access, name, descriptor, signature, exceptions)
+                if (mv == null) return null
+                return new MethodVisitor(Opcodes.ASM9, mv) {
+                    @Override
+                    void visitMethodInsn(int opcode, String owner, String mName, String mDesc, boolean isInterface) {
+                        if ("java/io/InputStream".equals(owner)
+                                || "java/io/BufferedInputStream".equals(owner)
+                                || "java/io/ByteArrayInputStream".equals(owner)
+                                || "java/io/FileInputStream".equals(owner)
+                                || "java/io/FilterInputStream".equals(owner)) {
+                            if ("readAllBytes".equals(mName) && "()[B".equals(mDesc)) {
+                                super.visitMethodInsn(Opcodes.INVOKESTATIC,
+                                        "com/example/sandrix/compat/JdkBackports",
+                                        "readAllBytes",
+                                        "(Ljava/io/InputStream;)[B",
+                                        false)
+                                return
+                            }
+                            if ("readNBytes".equals(mName) && "(I)[B".equals(mDesc)) {
+                                super.visitMethodInsn(Opcodes.INVOKESTATIC,
+                                        "com/example/sandrix/compat/JdkBackports",
+                                        "readNBytes",
+                                        "(Ljava/io/InputStream;I)[B",
+                                        false)
+                                return
+                            }
+                            if ("readNBytes".equals(mName) && "([BII)I".equals(mDesc)) {
+                                super.visitMethodInsn(Opcodes.INVOKESTATIC,
+                                        "com/example/sandrix/compat/JdkBackports",
+                                        "readNBytes",
+                                        "(Ljava/io/InputStream;[BII)I",
+                                        false)
+                                return
+                            }
+                        } else if ("java/io/ByteArrayOutputStream".equals(owner)
+                                && "toString".equals(mName)
+                                && "(Ljava/nio/charset/Charset;)Ljava/lang/String;".equals(mDesc)) {
+                            super.visitMethodInsn(Opcodes.INVOKESTATIC,
+                                    "com/example/sandrix/compat/JdkBackports",
+                                    "toString",
+                                    "(Ljava/io/ByteArrayOutputStream;Ljava/nio/charset/Charset;)Ljava/lang/String;",
+                                    false)
+                            return
+                        } else if ("java/util/Arrays".equals(owner)) {
+                            if ("compare".equals(mName) && "([C[C)I".equals(mDesc)) {
+                                super.visitMethodInsn(Opcodes.INVOKESTATIC,
+                                        "com/example/sandrix/compat/JdkBackports",
+                                        "compareChars",
+                                        "([C[C)I",
+                                        false)
+                                return
+                            }
+                            if ("equals".equals(mName) && "([BII[BII)Z".equals(mDesc)) {
+                                super.visitMethodInsn(Opcodes.INVOKESTATIC,
+                                        "com/example/sandrix/compat/JdkBackports",
+                                        "equalsBytes",
+                                        "([BII[BII)Z",
+                                        false)
+                                return
+                            }
+                        } else if ("java/nio/file/Path".equals(owner)
+                                && "of".equals(mName)
+                                && "(Ljava/net/URI;)Ljava/nio/file/Path;".equals(mDesc)) {
+                            super.visitMethodInsn(Opcodes.INVOKESTATIC,
+                                    "com/example/sandrix/compat/JdkBackports",
+                                    "pathOf",
+                                    "(Ljava/net/URI;)Ljava/nio/file/Path;",
+                                    false)
+                            return
+                        }
+                        super.visitMethodInsn(opcode, owner, mName, mDesc, isInterface)
+                    }
+                }
+            }
+        }
+    }
+
+    @Override
+    boolean isInstrumentable(ClassData classData) {
+        String name = classData.className
+        if (name.startsWith("com.example.sandrix.compat.")) {
+            return false
+        }
+        return name.startsWith("org.eclipse.jdt.")
+                || name.startsWith("com.android.tools.r8.")
+                || name.startsWith("org.eclipse.jgit.")
+                || name.startsWith("com.example.")
+    }
+}

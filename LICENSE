@@ -1,0 +1,43 @@
+Sandrix Studio IDE - Proprietary License
+Copyright (c) 2026 Sandaru Sasmitha(stechapps). All rights reserved.
+
+1. SOURCE AVAILABLE FOR VIEWING ONLY
+   The source code in this repository is made public so that it can be read and
+   inspected. It is NOT open source. No right is granted except those listed in
+   section 2.
+
+2. WHAT YOU MAY DO
+   - Download, install and use the official compiled app (APK) from the Releases
+     page for your own personal or professional use.
+   - View the source code in this repository for reading and learning.
+   - Report bugs and suggest changes through the Issues page.
+
+3. WHAT YOU MAY NOT DO
+   Without prior written permission from the copyright holder, you may not:
+   - modify, edit, adapt, translate or create derivative works of the source
+     code or the app;
+   - copy, reproduce, or reuse any part of the source code in another project;
+   - redistribute, republish, sell, sublicense or rent the source code or the app,
+     in original or modified form, including re-uploading APKs;
+   - build and distribute your own version, fork or clone of the app;
+   - decompile, reverse engineer or remove any copyright, branding or license
+     notice from the app;
+   - use the Sandrix name, logo or icon for any other product.
+
+4. THIRD-PARTY COMPONENTS
+   This app includes third-party open-source components (such as Eclipse ECJ,
+   Eclipse JGit, R8/D8, apksig and AndroidX). They remain under their own
+   licenses, and nothing in this license changes those terms.
+
+5. NO WARRANTY
+   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+   LIABILITY ARISING FROM THE USE OF THE SOFTWARE.
+
+6. TERMINATION
+   Any breach of this license ends your rights under it immediately.
+
+For permission requests, contact the copyright holder through the repository's
+Issues page.

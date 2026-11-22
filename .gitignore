@@ -1,0 +1,11 @@
+.gradle/
+**/build/
+local.properties
+.idea/
+*.iml
+.DS_Store
+# Never commit private signing material
+keystore/*
+!keystore/README.txt
+app/release-signing.properties
+release-signing.properties

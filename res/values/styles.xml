@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Base application theme inheriting from MaterialComponents / AppCompat -->
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/primary_cyan</item>
+        <item name="colorPrimaryDark">#0369A1</item>
+        <item name="colorAccent">@color/primary_cyan</item>
+        <item name="android:windowBackground">@color/surface_bg</item>
+    </style>
+</resources>

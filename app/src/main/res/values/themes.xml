@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.SandrixStudio" parent="Theme.Material3.Dark.NoActionBar">
+        <item name="colorPrimary">@color/sandrix_cyan</item>
+        <item name="colorOnPrimary">@color/sandrix_obsidian</item>
+        <item name="colorPrimaryContainer">@color/sandrix_cyan_dim</item>
+        <item name="colorOnPrimaryContainer">@color/sandrix_text_primary</item>
+        <item name="colorSecondary">@color/sandrix_emerald</item>
+        <item name="colorOnSecondary">@color/sandrix_emerald_dark</item>
+        <item name="colorTertiary">@color/sandrix_amber</item>
+        <item name="colorError">@color/sandrix_coral</item>
+        <item name="colorSurface">@color/sandrix_panel</item>
+        <item name="colorOnSurface">@color/sandrix_text_primary</item>
+        <item name="colorSurfaceVariant">@color/sandrix_elevated</item>
+        <item name="colorOnSurfaceVariant">@color/sandrix_text_secondary</item>
+        <item name="colorOutline">@color/sandrix_border</item>
+        <item name="android:colorBackground">@color/sandrix_obsidian</item>
+        <item name="android:windowBackground">@color/sandrix_obsidian</item>
+        <item name="android:fontFamily">@font/inter</item>
+        <item name="fontFamily">@font/inter</item>
+    </style>
+</resources>
