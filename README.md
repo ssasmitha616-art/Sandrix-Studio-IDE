@@ -139,6 +139,6 @@ Found a bug or have an idea? Open an **[Issue](../../issues)**. Please include y
 
 ## License
 
-Copyright (c) 2026 Sandaru Sasmitha(stechapps). All rights reserved.
+Copyright (c) 2026 Sandrix Developers PVT (LTD). All rights reserved.
 
 The source code is public for viewing only. You may install and use the official app, but you may not modify, copy, redistribute or republish the code or the app. See the [LICENSE](LICENSE) file for details.
