@@ -22,7 +22,7 @@ android {
     }
 
     defaultConfig {
-        applicationId 'com.stechapps.sandrixide.v1'
+        applicationId 'com.sandrixdev.sandrixide.v1'
         minSdk 24
         targetSdk 28
         versionCode Integer.parseInt((project.findProperty('appVersionCode') ?: '1').toString())
