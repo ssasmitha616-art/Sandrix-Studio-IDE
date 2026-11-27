@@ -25,3 +25,8 @@
 -dontwarn java.lang.management.**
 -dontwarn javax.**
 -dontwarn sun.**
+
+# apksig real package (the Maven group name above is not the Java package).
+-keep class com.android.apksig.** { *; }
+-keep class com.android.apksigner.** { *; }
+-dontwarn com.android.apksig.**
