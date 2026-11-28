@@ -1,144 +1,69 @@
-# Sandrix Studio IDE
+# Sandrix Studio IDE 🚀
 
-### Build Android apps on your phone. No PC needed.
+**Build, Compile, Debug, and Sign Android Apps Directly on Your Phone — No PC Required.**
 
-Sandrix Studio is a full Android IDE that runs on your Android device. Write Java and XML, add libraries, build an APK, and install it, all from the same app.
+Sandrix Studio IDE is a lightweight, full-featured on-device Integrated Development Environment (IDE) designed specifically to empower developers on low-spec Android devices. Built entirely on a **2GB RAM Nokia 3.4**, this IDE proves that you don't need expensive hardware to create production-ready Android applications.
 
-<!-- Add screenshots here, for example:
-<p align="center">
-  <img src="screenshots/editor.png" width="30%">
-  <img src="screenshots/build.png" width="30%">
-  <img src="screenshots/preview.png" width="30%">
-</p>
--->
+> 💡 **Fun Fact:** Sandrix Studio IDE is **100% self-hosting** — its own source code can be edited, compiled, and built directly inside Sandrix Studio IDE on a phone!
 
 ---
 
-## Download
+## ✨ Key Features
 
-Go to the **[Releases](../../releases)** page and download the latest `Sandrix-Studio-x.x.x.apk`.
+### 🛠️ Real Android Build Pipeline
+* **Full Compilation:** Powered by **AAPT2** (resource linking), **ECJ** (Java compilation), **D8** (dexing), **R8** (code shrinking & obfuscation), zipalign, and APK signing.
+* **Play Store Ready:** Generate both **APK** and **Android App Bundle (AAB)** files directly on your device.
+* **Background Builds:** Builds run smoothly in the background with live progress notifications.
+* **Flexible Configuration:** Supports both lightweight `build.sd` files and standard `build.gradle` configurations.
 
-## Install
+### 💻 Smart Code Editor & UI Tools
+* **Multi-Language Support:** Syntax highlighting for **Java**, **XML**, and `build.sd` with project indexing and IntelliSense code completion.
+* **Live XML Layout Preview:** Design your UI in XML and view real-time renders side-by-side in Split Mode.
+* **Layout Inspector:** Inspect view hierarchies and properties visually.
+* **Resource & Manifest Managers:** Easily manage strings, colors, drawables, assets, and `AndroidManifest.xml`.
 
-1. Open the downloaded APK on your phone.
-2. If Android asks, allow **Install unknown apps** for your browser or file manager.
-3. Tap **Install**, then open **Sandrix Studio IDE**.
+### 📦 Dependency & Signing Management
+* **Maven & AAR Support:** Add external libraries (AppCompat, Material Design, etc.) and custom Maven repositories effortlessly.
+* **Built-in Keystore Generator:** Create signing keys and sign release builds without external tools.
+* **APK Analyzer:** Inspect the contents, dex files, and resources inside any built APK.
 
-**You need:** Android 7.0 or newer on a 64-bit (arm64) phone, and an internet connection the first time you download libraries.
-
----
-
-## What you can do
-
-**Write code**
-- Code editor for Java, XML and `build.sd` files, with syntax highlighting
-- Multiple tabs, project file explorer, light and dark themes
-- Live layout preview next to your code (Code / Split / Preview)
-
-**Build and run**
-- One tap to compile, package, sign and install your app
-- Add libraries from Maven (AppCompat, Material and more) with the Dependency Manager
-- Live build log, error list with jump-to-error, and Logcat viewer
-- Build App Bundles (AAB) and shrink apps with R8
-
-**Manage your project**
-- Visual manager for strings, colors, drawables, images and assets
-- Manifest editor
-- Create and manage signing keys for release builds
-- APK analyzer to see what is inside an APK
-
-**Debug**
-- Breakpoints, step over / into / out
-- Inspect variables and the call stack
-
-**Git built in**
-- Clone, commit, branch, merge, stash, tag, push and pull
-- See file changes with diff view
+### 🐞 Advanced Debugging & Git Integration
+* **On-Device Debugger:** Set breakpoints, step over/into/out, and inspect variables and call stacks.
+* **Live Logcat & Problems Panel:** Filter real-time device logs and jump straight to compilation errors.
+* **Full Git Client:** Clone, commit, branch, checkout, merge, stash, tag, diff, and push/pull directly with GitHub.
 
 ---
 
-## Getting started
-
-### 1. Allow storage access
-On first launch, tap **Connect /storage/emulated/0/App_Project** and grant file access. Your projects are saved in the `App_Project` folder on your phone, so you can find them in any file manager. If you skip this, the app uses a private workspace instead.
-
-### 2. Create a project
-Tap **New project**, then enter:
-- **Project name**, for example `MyApp`
-- **Package name**, for example `com.yourname.myapp`
-- **Template**: *Hello Activity* (a simple starter) or *Counter App* (a small working example)
-
-### 3. Build and run
-Tap **Build and Run APK**. Sandrix compiles your code, links resources, signs the APK and offers to install it. Progress shows in the **Build** tab, and any mistakes show in **Problems**.
-
-### 4. Install and test
-When the build finishes, tap **Install built APK**. Use the **Logcat** tab to see your app's logs.
+## 📱 System Requirements
+* **OS:** Android 7.0 (Nougat) or newer
+* **Architecture:** 64-bit ARM (`arm64-v8a`)
+* **RAM:** Optimized for low-spec devices (**2GB RAM** or higher)
 
 ---
 
-## Project settings: `build.sd`
+## 📥 Installation
 
-Every project has a `build.sd` file where you set your app's version, SDK levels and libraries:
-
-```
-compileSdk = 36
-minSdk = 24
-targetSdk = 34
-versionCode = 1
-versionName = "1.0"
-javaVersion = 17
-
-dependencies {
-    implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.11.0")
-}
-```
-
-To add a library, add an `implementation("group:artifact:version")` line (or use the Dependency Manager) and build again. Sandrix downloads it for you. Standard Android `build.gradle` syntax also works.
+1. Visit the [Official Website](https://github.io) or go to the [Releases](https://github.com) page.
+2. Download the latest `Sandrix-Studio-IDE.apk`.
+3. Open the downloaded file and allow **Install unknown apps** if prompted by Android.
+4. Launch the app, grant storage permissions (projects are saved in `/App_Project`), and tap **New project**.
 
 ---
 
-## Using Git
-
-Open the **Git** panel from the toolbar.
-
-- **Clone:** paste an HTTPS repository URL
-- **Push / Pull:** set your remote (origin) and enter your GitHub username and a **personal access token** as the password (create one in GitHub → Settings → Developer settings → Personal access tokens)
+## 🎥 Video Demo & Tutorials
+Watch Sandrix Studio IDE in action on our official YouTube channel:
+* 📺 [Build an Android App on Your Phone (No PC) | Sandrix Studio IDE](https://youtube.com)
 
 ---
 
-## Troubleshooting
-
-| Problem | Fix |
-|---|---|
-| Can't install the APK | Allow **Install unknown apps** for the app you downloaded it with |
-| Build fails with "toolchain" errors | Open **Toolchain status** and check that all components show as ready |
-| Dependencies don't download | Check your internet connection and the library name and version in `build.sd` |
-| Projects not showing in your file manager | Make sure you granted storage access on first launch |
-| The app closes during a big build | Close other apps to free memory, then build again |
-| Can't push to GitHub | Use a personal access token, not your GitHub password |
+## 🤝 Contributing & Feedback
+Found a bug, have a feature request (like Kotlin support!), or want to contribute?
+* Open an issue on [GitHub Issues](https://github.com).
+* Star ⭐ this repository to support the project and help more mobile developers discover it!
 
 ---
 
-## Permissions explained
+## 👨‍💻 Author
+Created with passion by **Sandaru Sasmitha** ([Sandrix Developers PVT (LTD)](https://github.com)).
 
-| Permission | Why the app needs it |
-|---|---|
-| Internet | Download libraries and use Git |
-| All files access | Save projects to `App_Project` so you can reach them easily |
-| Install packages | Install the APKs you build |
-| Foreground service | Keep builds running with a progress notification |
-
-Sandrix Studio does not collect or send your code anywhere. Everything is built on your device.
-
----
-
-## Feedback
-
-Found a bug or have an idea? Open an **[Issue](../../issues)**. Please include your Android version, phone model and the build log.
-
-## License
-
-Copyright (c) 2026 Sandrix Developers PVT (LTD). All rights reserved.
-
-The source code is public for viewing only. You may install and use the official app, but you may not modify, copy, redistribute or republish the code or the app. See the [LICENSE](LICENSE) file for details.
+*© 2026 Sandrix Studio. All rights reserved.*
