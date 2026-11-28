@@ -43,10 +43,9 @@ Sandrix Studio IDE is a lightweight, full-featured on-device Integrated Developm
 
 ## 📥 Installation
 
-1. Visit the [Official Website](https://github.io) or go to the [Releases](https://github.com) page.
-2. Download the latest `Sandrix-Studio-IDE.apk`.
-3. Open the downloaded file and allow **Install unknown apps** if prompted by Android.
-4. Launch the app, grant storage permissions (projects are saved in `/App_Project`), and tap **New project**.
+1. Download the latest `Sandrix-Studio-IDE.apk`.
+2. Open the downloaded file and allow **Install unknown apps** if prompted by Android.
+3. Launch the app, grant storage permissions (projects are saved in `/App_Project`), and tap **New project**.
 
 ---
 
